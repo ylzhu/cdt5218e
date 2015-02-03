@@ -1070,20 +1070,16 @@ void rdaTVPowerOn(void)LARGE
     i2c1SendDataA(0x01010010,0x1700);     // LNA-PU-RFBP=1
 
 	chipVer = i2c0GetData(0xf0);
-	if(chipVer == 0x0083)
-	{
-		// new chip version
-		i2c1SendDataA(0x01010033,0x7bde);
-	}
-	else if(chipVer == 0x0087)
-	{
-		// new chip version
-		i2c1SendDataA(0x01010033,0x7bde);
-	}
-	else
-	{
+	if(chipVer == 0x0081)
+    {
 		i2c1SendDataA(0x01010033,0xff73);
 	}
+    else
+	{
+		// new chip version
+		i2c1SendDataA(0x01010033,0x7bde);
+	}
+	
     
     i2c1SendDataA(0x01010034,0x2224);
     i2c1SendDataA(0x01010035,0x1000);
@@ -2483,7 +2479,7 @@ uint8 CDT1028_Init(void) LARGE
 	tunerInitStatus = 1;
   }
   rdaDemodActive();
-  CDT1028_SetVolume(0x11);
+  CDT1028_SetVolume(0x10);
   #endif
 	if(rt)
 	{
@@ -3205,7 +3201,7 @@ uint8 CDT1028_ENTER_FM(void) LARGE
 
     rdaTVTunerOpen(&tuner_cfg_g);
     rdaTVSetFreq_tune(87000,6000,&tuner_cfg_g);
-	CDT1028_SetVolume(9);
+	CDT1028_SetVolume(0xf);
 	rdaTVModeIndexSet(&tuner_cfg_g, RDA_DTV_6M);
     return rt;
 }
